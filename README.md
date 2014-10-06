@@ -7,7 +7,7 @@ Currently under development.
 
 ## References
 * E. Cohen. **All-distances sketches, revisited: HIP estimators for massive graphs analysis.** In *PODS'14.*
-* P. Flajolet, è™±ric Fusy, O. Gandouet, and F. Meunier. **HyperLogLog: The analysis of a near-optimal cardinality estimation algorithm.** In *AOFA'07.*
+* P. Flajolet, √â. Fusy, O. Gandouet, and F. Meunier. **HyperLogLog: The analysis of a near-optimal cardinality estimation algorithm.** In *AOFA'07.*
 
 ## License
 The MIT License (MIT)
