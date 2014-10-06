@@ -1,3 +1,6 @@
+#ifndef HIP_ESTIMATOR_HIP_ESTIMATOR_H_
+#define HIP_ESTIMATOR_HIP_ESTIMATOR_H_
+
 #include <algorithm>
 #include <cstdint>
 #include "dense_array.h"
@@ -49,3 +52,5 @@ class hip_estimator {
   hash_type hash_;
 };
 }  // namespace hip_estimator
+
+#endif  // HIP_ESTIMATOR_HIP_ESTIMATOR_H_

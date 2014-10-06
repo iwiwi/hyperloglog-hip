@@ -1,3 +1,6 @@
+#ifndef HIP_ESTIMATOR_DENSE_ARRAY_H_
+#define HIP_ESTIMATOR_DENSE_ARRAY_H_
+
 #include <cstdint>
 #include <memory>
 
@@ -24,3 +27,5 @@ class dense_array<8> {
   std::unique_ptr<uint8_t[]> data_;
 };
 }  // namespace hip_estimator
+
+#endif  // HIP_ESTIMATOR_DENSE_ARRAY_H_
