@@ -12,5 +12,5 @@ clean:
 bin:
 	mkdir -p bin
 
-bin/test: src/*_test.cc gtest/*.cc
+bin/test: src/* gtest/*.cc
 	$(CXX) $(CXXFLAGS) -o $@ $^

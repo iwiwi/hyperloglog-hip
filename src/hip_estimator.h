@@ -6,7 +6,7 @@
 #include "dense_array.h"
 
 namespace hip_estimator {
-template<typename Key, typename Hash = std::hash<Key>, int NumRegisterBits = 8>
+template<typename Key, typename Hash = std::hash<Key>, int NumRegisterBits = 5>
 class hip_estimator {
  public:
   typedef Key key_type;

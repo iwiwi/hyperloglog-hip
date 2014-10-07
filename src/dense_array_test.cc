@@ -15,10 +15,11 @@ uint64_t xorshift64() {
   return x * 2685821657736338717LL;
 }
 
-template<int NumRegisterBits>
+template<int NumRegisterBits, typename Value = uint8_t>
 class dense_array_tester {
  public:
-  typedef dense_array<NumRegisterBits> dense_array_type;
+  typedef dense_array<NumRegisterBits, Value> dense_array_type;
+  typedef typename dense_array_type::value_type value_type;
 
   dense_array_tester(size_t size) : size_(size), da_(size), v_(size) {}
 
@@ -32,23 +33,35 @@ class dense_array_tester {
     ASSERT_EQ(da_.get(i), v_[i]) << i;
   }
 
-  void set(size_t i, uint8_t x) {
+  void set(size_t i, value_type x) {
+    x &= register_mask;
     v_[i] = x;
     da_.set(i, x);
   }
 
   void set_random(size_t i) {
-    uint8_t x = xorshift64() & ((uint64_t(1) << NumRegisterBits) - 1);
+    value_type x = xorshift64() & register_mask;
     set(i, x);
   }
 
  private:
+  static constexpr size_t num_register_bits = NumRegisterBits;
+  static constexpr uint64_t register_mask = uint64_t(-1) >> (64 - num_register_bits);
+
   size_t size_;
   dense_array_type da_;
-  vector<uint8_t> v_;
+  vector<value_type> v_;
 };
 
-typedef Types<dense_array_tester<8>> TesterTypes;
+typedef Types<
+    dense_array_tester<1>, dense_array_tester<2>, dense_array_tester<3>,
+    dense_array_tester<4>, dense_array_tester<5>, dense_array_tester<7>,
+    dense_array_tester<1, uint16_t>, dense_array_tester<15, uint16_t>,
+    dense_array_tester<1, uint32_t>, dense_array_tester<31, uint32_t>,
+    dense_array_tester<1, uint64_t>, dense_array_tester<63, uint64_t>,
+    dense_array_tester<8, uint8_t>, dense_array_tester<16, uint16_t>,
+    dense_array_tester<32, uint32_t>, dense_array_tester<64, uint64_t>
+> TesterTypes;
 }
 
 template<typename T>
