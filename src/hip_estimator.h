@@ -12,7 +12,7 @@ class hip_estimator {
   typedef Key key_type;
   typedef Hash hash_type;
 
-  hip_estimator(size_t num_bucket_bits = 14)
+  hip_estimator(size_t num_bucket_bits = 12)
     : num_bucket_bits_(num_bucket_bits), M_(1 << num_bucket_bits),
       c_(0), s_(1 << num_bucket_bits) {}
 
