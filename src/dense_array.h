@@ -68,7 +68,7 @@ class dense_array {
   static_assert(std::is_unsigned<value_type>::value,
                 "Value should be an unsigned integral type.");
 
-  static_assert(sizeof(value_type) * CHAR_BIT >= num_register_bits(),
+  static_assert(sizeof(value_type) * CHAR_BIT >= NumRegisterBits,
                 "Value should have at least NumRegisterBits bits.");
 };
 
