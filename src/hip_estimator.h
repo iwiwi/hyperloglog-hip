@@ -43,8 +43,8 @@ class hip_estimator {
   }
 
  private:
-  static constexpr uint64_t magic1 = 1;  // TODO: large prime
-  static constexpr uint64_t magic2 = 0;
+  static constexpr uint64_t magic1 = 9223372036854775837ULL;
+  static constexpr uint64_t magic2 = 1234567890123456789ULL;
 
   const size_t num_bucket_bits_;
   dense_array<NumRegisterBits> M_;

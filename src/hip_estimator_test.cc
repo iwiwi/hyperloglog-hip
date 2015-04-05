@@ -12,6 +12,33 @@ uint64_t xorshift64() {
   x ^= x >> 27; // c
   return x * 2685821657736338717LL;
 }
+
+template<typename Key>
+class hip_estimator_tester {
+ public:
+  typedef hip_estimator::hip_estimator<Key, std::hash<Key>, 8> hip_estimator_type;
+  typedef typename hip_estimator_type::key_type key_type;
+
+  hip_estimator_tester(size_t num_bucket_bits) : hip_(num_bucket_bits) {}
+
+  void insert(const key_type &v) {
+    hip_.insert(v);
+    us_.insert(v);
+  }
+
+  size_t count() {
+    return us_.size();
+  }
+
+  size_t error() {
+    size_t c1 = hip_.count(), c2 = us_.size();
+    return c1 > c2 ? c1 - c2 : c2 - c1;
+  }
+
+ private:
+  hip_estimator_type hip_;
+  unordered_set<key_type> us_;
+};
 }  // namespace
 
 TEST(hip_estimator, random) {
@@ -21,16 +48,13 @@ TEST(hip_estimator, random) {
 
   double result_sum_se = 0.0;
   for (int trial = 0; trial < kNumTrial; ++trial) {
-    hip_estimator::hip_estimator<uint64_t> hip(kNumBucketBits);
+    hip_estimator_tester<uint64_t> tester(kNumBucketBits);
 
-    std::unordered_set<uint64_t> us;
-    while (us.size() < kNumInsertion) {
-      uint64_t v = xorshift64();
-      us.insert(v);
-      hip.insert(v);
+    while (tester.count() < kNumInsertion) {
+      tester.insert(xorshift64());
     }
 
-    const double e = fabs(double(hip.count()) - kNumInsertion);
+    const double e = tester.error();
     result_sum_se += e * e;
   }
 
