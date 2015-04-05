@@ -20,7 +20,7 @@ class hip_estimator {
     static constexpr uint64_t num_register_bits = NumRegisterBits;
     static constexpr uint64_t register_limit = (uint64_t(1) << num_register_bits) - 1;
 
-    const uint64_t h = hash_(v) * magic1 + magic2;
+    const uint64_t h = hash_(v) * magic1() + magic2();
     const uint64_t h0 = h & ((uint64_t(1) << num_bucket_bits_) - 1);
     const uint64_t h1 = h >> num_bucket_bits_;
 
@@ -43,13 +43,18 @@ class hip_estimator {
   }
 
  private:
-  static constexpr uint64_t magic1 = 9223372036854775837ULL;
-  static constexpr uint64_t magic2 = 1234567890123456789ULL;
-
   const size_t num_bucket_bits_;
   dense_array<NumRegisterBits> M_;
   double c_, s_;
   hash_type hash_;
+
+  static constexpr uint64_t magic1() {
+    return 9223372036854775837ULL;
+  }
+
+  static constexpr uint64_t magic2() {
+    return 1234567890123456789ULL;
+  }
 };
 }  // namespace hip_estimator
 

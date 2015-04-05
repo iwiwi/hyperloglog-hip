@@ -16,54 +16,60 @@ class dense_array {
     : data_(new value_type[data_length(num_registers)]()) {}
 
   value_type get(size_t pos) {
-    const size_t b = pos * num_register_bits;
-    const size_t i1 = b / num_value_bits;
-    const size_t o1 = b - i1 * num_value_bits;
-    const size_t n1 = num_value_bits - o1;
+    const size_t b = pos * num_register_bits();
+    const size_t i1 = b / num_value_bits();
+    const size_t o1 = b - i1 * num_value_bits();
+    const size_t n1 = num_value_bits() - o1;
     value_type v = data_[i1] >> o1;
 
-    if (n1 > num_register_bits) {
-      v &= (value_type(1) << num_register_bits) - 1;
+    if (n1 > num_register_bits()) {
+      v &= (value_type(1) << num_register_bits()) - 1;
     }
-    else if (n1 < num_register_bits) {
+    else if (n1 < num_register_bits()) {
       const size_t i2 = i1 + 1;
-      const size_t n2 = num_register_bits - n1;
+      const size_t n2 = num_register_bits() - n1;
       v |= (data_[i2] & ((value_type(1) << n2) - 1)) << n1;
     }
     return v;
   }
 
   void set(size_t pos, value_type val) {
-    const size_t b = pos * num_register_bits;
+    const size_t b = pos * num_register_bits();
 
-    const size_t i1 = b / num_value_bits;
-    const size_t o1 = b - i1 * num_value_bits;
-    const size_t n1 = std::min(num_value_bits - o1, num_register_bits);
+    const size_t i1 = b / num_value_bits();
+    const size_t o1 = b - i1 * num_value_bits();
+    const size_t n1 = std::min(num_value_bits() - o1, num_register_bits());
     data_[i1] &= value_type(-1) ^ (((value_type(1) << n1) - 1) << o1);
     data_[i1] |= val << o1;
 
-    if (n1 < num_register_bits) {
+    if (n1 < num_register_bits()) {
       const size_t i2 = i1 + 1;
-      const size_t n2 = num_register_bits - n1;
+      const size_t n2 = num_register_bits() - n1;
       data_[i2] &= value_type(-1) ^ ((value_type(1) << n2) - 1);
       data_[i2] |= val >> n1;
     }
   }
 
  private:
-  static constexpr size_t num_register_bits = NumRegisterBits;
-  static constexpr size_t num_value_bits = sizeof(Value) * CHAR_BIT;
+  std::unique_ptr<value_type[]> data_;
+
+  static constexpr size_t num_register_bits() {
+    return NumRegisterBits;
+  }
+
+  static constexpr size_t num_value_bits() {
+    return sizeof(Value) * CHAR_BIT;
+  }
+
+  static constexpr size_t data_length(size_t num_registers) {
+    return (num_registers * num_register_bits() + num_value_bits() - 1) / num_value_bits();
+  }
 
   static_assert(std::is_unsigned<value_type>::value,
                 "Value should be an unsigned integral type.");
-  static_assert(sizeof(value_type) * CHAR_BIT >= num_register_bits,
+
+  static_assert(sizeof(value_type) * CHAR_BIT >= num_register_bits(),
                 "Value should have at least NumRegisterBits bits.");
-
-  std::unique_ptr<value_type[]> data_;
-
-  static size_t data_length(size_t num_registers) {
-    return (num_registers * num_register_bits + num_value_bits - 1) / num_value_bits;
-  }
 };
 
 template<typename Value>
