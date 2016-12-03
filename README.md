@@ -1,11 +1,9 @@
-HIP on HLL: Approximate Distinct Counter
+HLL-HIP: Approximate Distinct Counter
 ========================================
 
 [![Build Status](https://travis-ci.org/iwiwi/hip-hyperloglog.svg?branch=master)](https://travis-ci.org/iwiwi/hip-hyperloglog)
 
-This is a C++ implementation of the modern approximate distinct counter which adopts the *Historic Inverse Probability estimator (HIP)* on the *HyperLogLog counter* (*k*-partition Minwise Hashing with base-2 ranks).
-
-Currently under development.
+This is a C++ implementation of the modern approximate distinct counter using the *Historic Inverse Probability estimator (HIP)* on the *HyperLogLog counter* (*k*-partition Minwise Hashing with base-2 ranks).
 
 ## References
 * E. Cohen. **All-distances sketches, revisited: HIP estimators for massive graphs analysis.** In *PODS'14.*

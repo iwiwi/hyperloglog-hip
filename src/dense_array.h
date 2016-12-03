@@ -1,12 +1,13 @@
-#ifndef HIP_ESTIMATOR_DENSE_ARRAY_H_
-#define HIP_ESTIMATOR_DENSE_ARRAY_H_
+#ifndef HYPERLOGLOG_HIP_DENSE_ARRAY_H_
+#define HYPERLOGLOG_HIP_DENSE_ARRAY_H_
 
+#include <algorithm>
 #include <climits>
 #include <cstdint>
 #include <memory>
 #include <type_traits>
 
-namespace hip_estimator {
+namespace hyperloglog_hip {
 template<size_t NumRegisterBits, typename Value = uint8_t>
 class dense_array {
  public:
@@ -115,6 +116,6 @@ class dense_array<64, uint64_t> : public dense_array_primitive<uint64_t> {
  public:
   dense_array(size_t size) : dense_array_primitive(size) {}
 };
-}  // namespace hip_estimator
+}  // namespace hyperloglog_hip
 
-#endif  // HIP_ESTIMATOR_DENSE_ARRAY_H_
+#endif  // HYEPRLOGLOG_HIP_DENSE_ARRAY_H_

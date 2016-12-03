@@ -16,7 +16,7 @@ uint64_t xorshift64() {
 template<typename Key>
 class hip_estimator_tester {
  public:
-  typedef hip_estimator::hip_estimator<Key, std::hash<Key>, 8> hip_estimator_type;
+  typedef hyperloglog_hip::hip_estimator<Key, std::hash<Key>, 8> hip_estimator_type;
   typedef typename hip_estimator_type::key_type key_type;
 
   hip_estimator_tester(size_t num_bucket_bits) : hip_(num_bucket_bits) {}

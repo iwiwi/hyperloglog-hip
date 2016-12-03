@@ -2,7 +2,7 @@
 #include "gtest/gtest.h"
 #include <vector>
 using namespace std;
-using namespace hip_estimator;
+using namespace hyperloglog_hip;
 using testing::Types;
 
 namespace {

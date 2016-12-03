@@ -1,11 +1,12 @@
-#ifndef HIP_ESTIMATOR_HIP_ESTIMATOR_H_
-#define HIP_ESTIMATOR_HIP_ESTIMATOR_H_
+#ifndef HYPERLOGLOG_HIP_HIP_ESTIMATOR_H_
+#define HYPERLOGLOG_HIP_HIP_ESTIMATOR_H_
 
 #include <algorithm>
 #include <cstdint>
+#include <cmath>
 #include "dense_array.h"
 
-namespace hip_estimator {
+namespace hyperloglog_hip {
 template<typename Key, typename Hash = std::hash<Key>, int NumRegisterBits = 5>
 class hip_estimator {
  public:
@@ -56,6 +57,6 @@ class hip_estimator {
     return 1234567890123456789ULL;
   }
 };
-}  // namespace hip_estimator
+}  // namespace hyperloglog_hip
 
-#endif  // HIP_ESTIMATOR_HIP_ESTIMATOR_H_
+#endif  // HYPERLOGLOG_HIP_HIP_ESTIMATOR_H_
