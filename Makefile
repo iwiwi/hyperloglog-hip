@@ -1,5 +1,4 @@
-CXX = g++
-CXXFLAGS = -g -std=c++0x -O3 -Wall -Wextra -pthread -I.
+CXXFLAGS = -g -std=c++0x -O3 -Wall -Wextra -pthread -I src
 
 .PHONY: test clean
 

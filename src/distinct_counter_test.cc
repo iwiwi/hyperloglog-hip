@@ -1,4 +1,4 @@
-#include "hip_estimator.h"
+#include "distinct_counter.h"
 #include <unordered_set>
 #include "gtest/gtest.h"
 using namespace std;
@@ -14,12 +14,12 @@ uint64_t xorshift64() {
 }
 
 template<typename Key>
-class hip_estimator_tester {
+class distinct_counter_tester {
  public:
-  typedef hyperloglog_hip::hip_estimator<Key, std::hash<Key>, 8> hip_estimator_type;
-  typedef typename hip_estimator_type::key_type key_type;
+  typedef hyperloglog_hip::distinct_counter<Key, std::hash<Key>, 8> distinct_counter_type;
+  typedef typename distinct_counter_type::key_type key_type;
 
-  hip_estimator_tester(size_t num_bucket_bits) : hip_(num_bucket_bits) {}
+  distinct_counter_tester(size_t num_bucket_bits) : hip_(num_bucket_bits) {}
 
   void insert(const key_type &v) {
     hip_.insert(v);
@@ -36,19 +36,19 @@ class hip_estimator_tester {
   }
 
  private:
-  hip_estimator_type hip_;
+  distinct_counter_type hip_;
   unordered_set<key_type> us_;
 };
 }  // namespace
 
-TEST(hip_estimator, random) {
+TEST(distinct_counter, random) {
   static const int kNumTrial = 100;
   static const size_t kNumInsertion = 100000;
   static const int kNumBucketBits = 10;
 
   double result_sum_se = 0.0;
   for (int trial = 0; trial < kNumTrial; ++trial) {
-    hip_estimator_tester<uint64_t> tester(kNumBucketBits);
+    distinct_counter_tester<uint64_t> tester(kNumBucketBits);
 
     while (tester.count() < kNumInsertion) {
       tester.insert(xorshift64());

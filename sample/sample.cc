@@ -1,11 +1,11 @@
 #include <iostream>
 #include <string>
-#include "hip_estimator.h"
+#include "distinct_counter.h"
 
 int main() {
   {
     // Integers
-    hyperloglog_hip::hip_estimator<int> h;
+    hyperloglog_hip::distinct_counter<int> h;
     h.insert(1);
     h.insert(10);
     h.insert(5);
@@ -17,7 +17,7 @@ int main() {
 
   {
     // Strings
-    hyperloglog_hip::hip_estimator<std::string> h;
+    hyperloglog_hip::distinct_counter<std::string> h;
     std::cout << h.count() << std::endl;  // #{} = 0
     h.insert("akiba");
     h.insert("iwi");

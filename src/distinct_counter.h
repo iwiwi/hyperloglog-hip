@@ -1,5 +1,5 @@
-#ifndef HYPERLOGLOG_HIP_HIP_ESTIMATOR_H_
-#define HYPERLOGLOG_HIP_HIP_ESTIMATOR_H_
+#ifndef HYPERLOGLOG_HIP_DISTINCT_COUNTER_H_
+#define HYPERLOGLOG_HIP_DISTINCT_COUNTER_H_
 
 #include <algorithm>
 #include <cstdint>
@@ -8,12 +8,12 @@
 
 namespace hyperloglog_hip {
 template<typename Key, typename Hash = std::hash<Key>, int NumRegisterBits = 5>
-class hip_estimator {
+class distinct_counter {
  public:
   typedef Key key_type;
   typedef Hash hash_type;
 
-  hip_estimator(size_t num_bucket_bits = 12)
+  distinct_counter(size_t num_bucket_bits = 12)
     : num_bucket_bits_(num_bucket_bits), M_(1 << num_bucket_bits),
       c_(0), s_(1 << num_bucket_bits) {}
 
@@ -59,4 +59,4 @@ class hip_estimator {
 };
 }  // namespace hyperloglog_hip
 
-#endif  // HYPERLOGLOG_HIP_HIP_ESTIMATOR_H_
+#endif  // HYPERLOGLOG_HIP_DISTINCT_COUNTER_H_
